@@ -16,7 +16,7 @@ users = {
         "name":"John Sarbah",
         "school":"KNUST",
         "age":19,
-        "programme":"Computer Sience",
+        "programme":"Computer Science",
         "contact": "0549758751"
     },
     3 :{
