@@ -5,30 +5,42 @@ app = FastAPI()
 
 users = {
     1 :{
-        "name":"Reggie",
+        "name":"Reginald Ankomah",
         "school":"KNUST",
         "age":18,
-        "programme":"Information Technology"
+        "programme":"Information Technology",
+        "contact":"0503952091"
 
     },
-    
     2 :{
-        "name":"John",
+        "name":"John Sarbah",
         "school":"KNUST",
         "age":19,
-        "programme":"Computer Sience"
-
+        "programme":"Computer Sience",
+        "contact": "0549758751"
     },
     3 :{
         "name":"Elspeth",
         "school":"KNUST",
         "age":17,
-        "programme":"Computer Engineering"
+        "programme":"Computer Engineering",
+        "contact": "0258085033"
+    },
+    4 :{
+        "name":"David Goliath",
+        "school":"KNUST",
+        "age":18,
+        "programme":"Biomedical Engineering",
+        "contact": "0247584963"
+    },
+    5 :{
+        "name":"Judy Johns",
+        "school":"KNUST",
+        "age":21,
+        "programme":"Medicine",    
+        "contact": "0508180968"
 
     }
-
-
-
 }
 
 #Base Pydantic Models
@@ -37,12 +49,14 @@ class User(BaseModel):
     school:str
     age:int
     programme:str
+    contact:str
 
 class UpdateUser(BaseModel):
     name:Optional[str] = None
     school:Optional[str] = None
     age:Optional[int] = None
     programme:Optional[str] = None
+    contact:Optional[str] = None
 
 #Endpoint
 @app.get("/")
@@ -84,6 +98,8 @@ def update_user(user_id:int, user:UpdateUser):
         current_user["age"] = user.age
     if user.programme is not None:
         current_user["programme"] = user.programme
+    if user.contact is not None:
+        current_user["contact"] = user.contact
 
     return current_user
 
@@ -101,10 +117,10 @@ def delete_user(user_id:int):
 @app.get("/user/search/")
 def search_by_name(name: Optional[str] = None):
     if not name:
-        return {"message":"NAme parameter is required"}
+        return {"message":"Name parameter is required"}
     
     for user in users.values():
-        if user["name"] == name.lower():
+        if user["name"].lower() == name.lower():
             return user
     raise HTTPException(status_code=404, 
                         detail="User not found!")
